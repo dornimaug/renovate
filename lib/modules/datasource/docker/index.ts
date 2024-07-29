@@ -466,13 +466,14 @@ export class DockerDatasource extends Datasource {
       return {};
     }
     // Docker Hub library images don't have labels we need
-    if (
-      registryHost === 'https://index.docker.io' &&
-      dockerRepository.startsWith('library/')
-    ) {
-      logger.debug('Docker Hub library image - skipping label lookup');
-      return {};
-    }
+    // Trying to reproduce https://github.com/renovatebot/renovate/discussions/30452
+    //if (
+    //  registryHost === 'https://index.docker.io' &&
+    //  dockerRepository.startsWith('library/')
+    //) {
+    //  logger.debug('Docker Hub library image - skipping label lookup');
+    //  return {};
+    //}
     try {
       let labels: Record<string, string> | undefined = {};
       const manifest = await this.getManifest(
